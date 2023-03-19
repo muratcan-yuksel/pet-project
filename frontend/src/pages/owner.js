@@ -5,6 +5,7 @@ import axios from "axios";
 import Pets from "@/components/Pets";
 import Store from "@/components/Store";
 import Caretakers from "@/components/Caretakers";
+import Bookings from "@/components/Bookings";
 
 const owner = () => {
   const [data, setData] = useContext(DataContext);
@@ -50,6 +51,8 @@ const owner = () => {
       return <Store />;
     } else if (data.navChoice === "Caretakers") {
       return <Caretakers caretakers={caretakers} />;
+    } else if (data.navChoice === "Book Appointment") {
+      return <Bookings pets={pets} />;
     }
   };
 
