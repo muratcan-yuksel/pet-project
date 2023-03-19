@@ -8,7 +8,11 @@ export const DataContext = createContext([]);
 
 //this is our provider
 export const DataProvider = (props) => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState({
+    user: {},
+    token: "",
+    navChoice: "",
+  });
 
   return (
     <div>

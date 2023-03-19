@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -7,12 +7,14 @@ import Image from "next/image";
 import furrycare from "../images/furrycare.svg";
 import axios from "axios";
 import { useRouter } from "next/router";
+import { DataContext } from "@/context/provider";
 
 const index = () => {
   const [Name, setName] = useState("");
   const [Email, setEmail] = useState("");
   const [Password, setPassword] = useState("");
   const router = useRouter();
+  const [data, setData] = useContext(DataContext);
 
   const login = async () => {
     try {
@@ -24,7 +26,8 @@ const index = () => {
       console.log(res.data);
       const user = res.data.user;
       localStorage.setItem("token", res.data.token);
-      localStorage.setItem("user", user);
+      // localStorage.setItem("user", user);
+      setData({ ...data, user: user });
       // Redirect the user to their respective page based on their role
       switch (user.role) {
         case "vet":
@@ -37,9 +40,6 @@ const index = () => {
           router.push("/admin");
           break;
         default:
-          // If the user has an invalid or unrecognized role, you could redirect them to an error page or do something else
-          router.push("/error");
-          break;
       }
     } catch (error) {
       console.log(error);

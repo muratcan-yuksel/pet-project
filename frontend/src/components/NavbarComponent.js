@@ -41,8 +41,8 @@ function ResponsiveAppBar() {
   };
 
   const sendData = (e) => {
-    setData(e);
-    console.log(e);
+    setData({ ...data, navChoice: e });
+    // console.log(e);
   };
 
   return (
