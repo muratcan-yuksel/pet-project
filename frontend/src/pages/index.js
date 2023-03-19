@@ -24,6 +24,7 @@ const index = () => {
       console.log(res.data);
       const user = res.data.user;
       localStorage.setItem("token", res.data.token);
+      localStorage.setItem("user", user);
       // Redirect the user to their respective page based on their role
       switch (user.role) {
         case "vet":
