@@ -12,10 +12,12 @@ const getVets = asyncWrapper(async (req, res) => {
 
 //create vet
 const createVet = asyncWrapper(async (req, res) => {
-  const vet = await Vet.create(req.body);
-  res.status(201).json({
-    vet,
+  const vet = new Vet({
+    _id: new mongoose.Types.ObjectId(),
+    name: req.body.name,
+    address: req.body.address,
   });
+  await vet.save();
 });
 
 module.exports = {

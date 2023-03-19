@@ -4,6 +4,9 @@ const vetSchema = new mongoose.Schema({
   name: {
     type: String,
   },
+  address: {
+    type: String,
+  },
 });
 
 const Vet = mongoose.model("Vet", vetSchema);

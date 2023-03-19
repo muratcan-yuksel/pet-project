@@ -80,7 +80,7 @@ export default function Bookings({ pets, vets }) {
           >
             {pets &&
               pets.map((pet) => (
-                <MenuItem value={pet._id}>{pet.name}</MenuItem>
+                <MenuItem value={pet.name}>{pet.name}</MenuItem>
               ))}
           </Select>
         </FormControl>
