@@ -5,11 +5,12 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { Button, TextField } from "@mui/material";
+import axios from "axios";
 
-export default function Bookings({ pets }) {
+export default function Bookings({ pets, vets }) {
   const [pet, setPet] = useState("");
   const [vet, setVet] = useState("");
-
+  const [reason, setReason] = useState("");
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
 
@@ -26,6 +27,36 @@ export default function Bookings({ pets }) {
   };
   const handleVet = (event) => {
     setVet(event.target.value);
+  };
+
+  const handleReason = (event) => {
+    setReason(event.target.value);
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    console.log(pet, vet, reason, date, time);
+
+    try {
+      const res = axios.post(
+        "http://localhost:3000/appointments",
+        {
+          pet,
+          vet,
+          reason,
+          date,
+          time,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -64,9 +95,10 @@ export default function Bookings({ pets }) {
             label="Select Vet"
             onChange={handleVet}
           >
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
+            {vets &&
+              vets.map((vet) => (
+                <MenuItem value={vet._id}>{vet.name}</MenuItem>
+              ))}
           </Select>
         </FormControl>
       </Box>
@@ -95,8 +127,12 @@ export default function Bookings({ pets }) {
         id="standard-basic"
         label="Appointment Reason"
         variant="standard"
+        value={reason}
+        onChange={handleReason}
       />
-      <Button variant="outlined">Book Appointment</Button>
+      <Button onClick={handleSubmit} variant="outlined">
+        Book Appointment
+      </Button>
     </Box>
   );
 }

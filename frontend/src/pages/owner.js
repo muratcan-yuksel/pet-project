@@ -10,6 +10,7 @@ import Bookings from "@/components/Bookings";
 const owner = () => {
   const [data, setData] = useContext(DataContext);
   const [pets, setPets] = useState([]);
+  const [vets, setVets] = useState([]);
   const [caretakers, setCaretakers] = useState([]);
 
   const getPets = async () => {
@@ -25,6 +26,20 @@ const owner = () => {
       );
       setPets(filteredPets);
       console.log(filteredPets);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getVets = async () => {
+    try {
+      const res = await axios.get("http://localhost:3000/vets", {
+        headers: {
+          Authorization: `Bearer ${data.token}`,
+        },
+      });
+      console.log(res.data);
+      setVets(res.data.vets);
     } catch (error) {
       console.log(error);
     }
@@ -52,13 +67,14 @@ const owner = () => {
     } else if (data.navChoice === "Caretakers") {
       return <Caretakers caretakers={caretakers} />;
     } else if (data.navChoice === "Book Appointment") {
-      return <Bookings pets={pets} />;
+      return <Bookings pets={pets} vets={vets} />;
     }
   };
 
   useEffect(() => {
     getCaretakers();
     getPets();
+    getVets();
   }, []);
 
   console.log("mydata", data);

@@ -14,7 +14,13 @@ const getAppointments = asyncWrapper(async (req, res) => {
 const createAppointment = asyncWrapper(async (req, res) => {
   const appointment = new Appointment({
     _id: new mongoose.Types.ObjectId(),
+    pet: req.body.pet,
+    vet: req.body.vet,
+    date: req.body.date,
+    time: req.body.time,
+    reason: req.body.reason,
   });
+  await appointment.save();
 });
 
 //get appointment by id
