@@ -11,7 +11,7 @@ export const DataProvider = (props) => {
   const [data, setData] = useState({
     user: {},
     token: "",
-    navChoice: "",
+    navChoice: "Pets",
   });
 
   return (
