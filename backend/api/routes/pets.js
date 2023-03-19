@@ -10,10 +10,10 @@ const {
   deletePet,
 } = require("../controllers/pets");
 
-router.post("/", jwtAuthMiddleware, createPet);
-router.get("/", jwtAuthMiddleware, getPets);
-router.get("/:petId", jwtAuthMiddleware, getPetById);
-router.patch("/:petId", jwtAuthMiddleware, updatePet);
-router.delete("/:petId", jwtAuthMiddleware, deletePet);
+router.post("/", createPet);
+router.get("/", getPets);
+router.get("/:petId", getPetById);
+router.patch("/:petId", updatePet);
+router.delete("/:petId", deletePet);
 
 module.exports = router;

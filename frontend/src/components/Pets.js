@@ -19,6 +19,7 @@ const pets = ({ pets }) => {
               border: "2px solid black",
               display: "flex",
               flexDirection: "row",
+              margin: "10px",
             }}
           >
             <Box

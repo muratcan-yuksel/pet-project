@@ -4,10 +4,12 @@ import { DataContext } from "@/context/provider";
 import axios from "axios";
 import Pets from "@/components/Pets";
 import Store from "@/components/Store";
+import Caretakers from "@/components/Caretakers";
 
 const owner = () => {
   const [data, setData] = useContext(DataContext);
   const [pets, setPets] = useState([]);
+  const [caretakers, setCaretakers] = useState([]);
 
   const getPets = async () => {
     try {
@@ -27,27 +29,32 @@ const owner = () => {
     }
   };
 
-  // if (data.navChoice === "pets") {
-  //   return (
-  //     <div>
-  //       {pets.map((pet) => (
-  //         <div key={pet._id}>
-  //           <h1>{pet.name}</h1>
-  //         </div>
-  //       ))}
-  //     </div>
-  //   );
-  // }
+  const getCaretakers = async () => {
+    try {
+      const res = await axios.get("http://localhost:3000/caretakers", {
+        headers: {
+          Authorization: `Bearer ${data.token}`,
+        },
+      });
+      console.log(res.data);
+      setCaretakers(res.data.caretakers);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const choice = () => {
     if (data.navChoice === "Pets") {
       return <Pets pets={pets} />;
     } else if (data.navChoice === "Store") {
       return <Store />;
+    } else if (data.navChoice === "Caretakers") {
+      return <Caretakers caretakers={caretakers} />;
     }
   };
 
   useEffect(() => {
+    getCaretakers();
     getPets();
   }, []);
 

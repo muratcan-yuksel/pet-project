@@ -9,6 +9,7 @@ const connectDB = require("./api/db/connect");
 //import routes
 const petsRoutes = require("./api/routes/pets.js");
 const usersRoutes = require("./api/routes/users.js");
+const caretakersRoutes = require("./api/routes/caretakers.js");
 
 //use morgan before the routes
 //this specific one logs the request
@@ -37,6 +38,7 @@ app.use((req, res, next) => {
 //routes which should handle requests
 app.use("/pets", petsRoutes);
 app.use("/users", usersRoutes);
+app.use("/caretakers", caretakersRoutes);
 
 app.use((req, res, next) => {
   const error = new Error("Not found");

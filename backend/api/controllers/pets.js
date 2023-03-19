@@ -40,15 +40,6 @@ const getPets = asyncWrapper(async (req, res) => {
   });
 });
 
-// //get pets by user
-// const getPetsByUser = asyncWrapper(async (req, res) => {
-//   // Find the user with the corresponding userId and populate their pets array with the pet objects
-//   const user = await User.findById(req.userData.userId).populate("pets");
-//   res.status(200).json({
-//     pets: user.pets,
-//   });
-// });
-
 //get pet by id
 const getPetById = asyncWrapper(async (req, res) => {
   const pet = await Pet.findById(req.params.petId);
