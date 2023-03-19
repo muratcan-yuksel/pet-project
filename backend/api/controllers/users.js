@@ -35,6 +35,13 @@ const getUsers = asyncWrapper(async (req, res) => {
   });
 });
 
+const getPets = asyncWrapper(async (req, res) => {
+  const user = await User.findById(req.params.userId).populate("pets");
+  res.status(200).json({
+    pets: user.pets,
+  });
+});
+
 //login user
 const login = asyncWrapper(async (req, res) => {
   const user = await User.find({ email: req.body.email });
@@ -66,6 +73,16 @@ const login = asyncWrapper(async (req, res) => {
   });
 });
 
+// //assign pet to user
+// const assignPet = asyncWrapper(async (req, res) => {
+//   const user = await User.findById(req.params.userId);
+//   user.pets.push(req.params.petId);
+//   await user.save();
+//   res.status(200).json({
+//     message: "Pet assigned",
+//   });
+// });
+
 //delete user
 const deleteUser = asyncWrapper(async (req, res) => {
   await User.remove({ _id: req.params.userId });
@@ -79,4 +96,6 @@ module.exports = {
   getUsers,
   login,
   deleteUser,
+  getPets,
+  // assignPet,
 };

@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-// const User = require("./user"); // import User model
+const User = require("./user"); // import User model
 
 const petSchema = new mongoose.Schema({
   name: {
@@ -15,11 +15,11 @@ const petSchema = new mongoose.Schema({
     default: "other",
     required: true,
   },
-  allergies: { type: String, required: false },
+  allergies: { type: Array, required: false },
   bloodGroup: { type: String, required: true },
   weight: { type: Number, required: true },
-  currentMedications: { type: String, required: false },
-  vaccinationHistory: { type: String, required: false },
+  currentMedications: { type: Array, required: false },
+  vaccinationHistory: { type: Array, required: false },
   //will be an array of objects
   medicalHistory: { type: Array, required: false },
 });

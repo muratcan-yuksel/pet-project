@@ -21,6 +21,12 @@ const createPet = asyncWrapper(async (req, res) => {
     medicalHistory: req.body.medicalHistory,
   });
   await pet.save();
+
+  // Find the user with the corresponding userId and update their pets array with the new pet's id
+  const user = await User.findById(req.userData.userId);
+  user.pets.push(pet._id);
+  await user.save();
+
   res.status(201).json({
     message: "Pet created",
   });
@@ -33,6 +39,15 @@ const getPets = asyncWrapper(async (req, res) => {
     pets,
   });
 });
+
+// //get pets by user
+// const getPetsByUser = asyncWrapper(async (req, res) => {
+//   // Find the user with the corresponding userId and populate their pets array with the pet objects
+//   const user = await User.findById(req.userData.userId).populate("pets");
+//   res.status(200).json({
+//     pets: user.pets,
+//   });
+// });
 
 //get pet by id
 const getPetById = asyncWrapper(async (req, res) => {

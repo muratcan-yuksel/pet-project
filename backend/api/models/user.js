@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-
+const Pet = require("./pet");
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
