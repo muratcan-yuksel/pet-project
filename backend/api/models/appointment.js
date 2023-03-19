@@ -8,6 +8,10 @@ const appointmentSchema = new mongoose.Schema({
   pet: {
     type: String,
   },
+  petId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Pet",
+  },
   vet: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Vet",

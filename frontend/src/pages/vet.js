@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { Box } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import Image from "next/image";
 import furrycare from "../images/furrycare.svg";
 import { DataContext } from "@/context/provider";
@@ -66,13 +66,38 @@ const vet = () => {
           onChange={handleInputChange}
         />
       </Box>
-      <Box sx={{ padding: "1rem" }}>
+      <Box
+        sx={{
+          padding: "1rem",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
         {filteredAppointments.map((appointment) => (
-          <div key={appointment._id}>
+          <Box
+            sx={{
+              border: "1px solid black",
+              padding: "10px",
+              margin: "10px",
+              display: "flex",
+              flexDirection: "column",
+            }}
+            key={appointment._id}
+          >
             <h3>{appointment.pet}</h3>
             <p>Date: {appointment.date}</p>
             <p>Time: {appointment.time}</p>
-          </div>
+            <TextField
+              id="outlined-basic"
+              label="Description"
+              variant="outlined"
+            ></TextField>
+            <Button sx={{ marginTop: "1rem" }} variant="contained">
+              Submit
+            </Button>
+          </Box>
         ))}
       </Box>
     </Box>

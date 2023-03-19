@@ -9,6 +9,7 @@ import axios from "axios";
 
 export default function Bookings({ pets, vets }) {
   const [pet, setPet] = useState("");
+  const [petId, setPetId] = useState("");
   const [vet, setVet] = useState("");
   const [reason, setReason] = useState("");
   const [date, setDate] = useState("");
@@ -23,7 +24,9 @@ export default function Bookings({ pets, vets }) {
   };
 
   const handlePet = (event) => {
-    setPet(event.target.value);
+    console.log(event.target.value);
+    setPet(event.target.value.name);
+    setPetId(event.target.value._id);
   };
   const handleVet = (event) => {
     setVet(event.target.value);
@@ -42,6 +45,7 @@ export default function Bookings({ pets, vets }) {
         "http://localhost:3000/appointments",
         {
           pet,
+          petId,
           vet,
           reason,
           date,
@@ -79,9 +83,7 @@ export default function Bookings({ pets, vets }) {
             onChange={handlePet}
           >
             {pets &&
-              pets.map((pet) => (
-                <MenuItem value={pet.name}>{pet.name}</MenuItem>
-              ))}
+              pets.map((pet) => <MenuItem value={pet}>{pet.name}</MenuItem>)}
           </Select>
         </FormControl>
       </Box>{" "}
