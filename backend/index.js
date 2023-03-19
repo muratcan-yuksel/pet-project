@@ -5,6 +5,9 @@ require("dotenv").config();
 
 const connectDB = require("./api/db/connect");
 
+//import routes
+const petsRoutes = require("./api/routes/pets.js");
+const usersRoutes = require("./api/routes/users.js");
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });

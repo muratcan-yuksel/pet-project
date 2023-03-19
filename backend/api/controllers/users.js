@@ -3,7 +3,7 @@ const Pet = require("../models/pet");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
-const asyncWrapper = require("../middleware/asyncWrapper");
+const asyncWrapper = require("../middleware/async");
 
 //create user
 const signup = asyncWrapper(async (req, res) => {
