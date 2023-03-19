@@ -1,16 +1,43 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import NavbarComponent from "../components/NavbarComponent";
 import Image from "next/image";
-import Radio from "@mui/material/Radio";
-import RadioGroup from "@mui/material/RadioGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import FormControl from "@mui/material/FormControl";
 import furrycare from "../images/furrycare.svg";
+import axios from "axios";
 
 const index = () => {
+  const [Name, setName] = useState("");
+  const [Email, setEmail] = useState("");
+  const [Password, setPassword] = useState("");
+
+  const login = () => {
+    try {
+      const res = axios.post("http://localhost:3000/users/login", {
+        email: Email,
+        password: Password,
+        name: Name,
+      });
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const signup = () => {
+    try {
+      const res = axios.post("http://localhost:3000/users/signup", {
+        email: Email,
+        password: Password,
+        name: Name,
+      });
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div
       style={{
@@ -45,29 +72,37 @@ const index = () => {
         }}
       >
         {" "}
-        <TextField id="standard-basic" label="Name" variant="standard" />
-        <TextField id="standard-basic" label="Email" variant="standard" />
-        <TextField id="standard-basic" label="Password" variant="standard" />
-        <Box>
-          <FormControl>
-            <RadioGroup
-              row
-              aria-labelledby="demo-row-radio-buttons-group-label"
-              name="row-radio-buttons-group"
-            >
-              <FormControlLabel
-                value="owner"
-                control={<Radio />}
-                label="Owner"
-              />
-              <FormControlLabel value="vet" control={<Radio />} label="Vet" />
-            </RadioGroup>
-          </FormControl>
-        </Box>
-        <Button sx={{ width: "100%", marginTop: "1rem" }} variant="contained">
+        <TextField
+          id="standard-basic"
+          label="Name"
+          variant="standard"
+          onChange={(e) => setName(e.target.value)}
+        />
+        <TextField
+          id="standard-basic"
+          label="Email"
+          variant="standard"
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <TextField
+          id="standard-basic"
+          label="Password"
+          variant="standard"
+          type="password"
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <Button
+          sx={{ width: "100%", marginTop: "1rem" }}
+          variant="contained"
+          onClick={login}
+        >
           LogIn
         </Button>
-        <Button sx={{ width: "100%", marginTop: "2rem" }} variant="contained">
+        <Button
+          sx={{ width: "100%", marginTop: "1rem" }}
+          variant="contained"
+          onClick={signup}
+        >
           SignUp
         </Button>
       </Box>
