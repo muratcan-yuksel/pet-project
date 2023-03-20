@@ -11,6 +11,7 @@ const vet = () => {
   const [input, setInput] = useState("");
   const [appointments, setAppointments] = useState([]);
   const [filteredAppointments, setFilteredAppointments] = useState([]);
+  const [note, setNote] = useState("");
 
   const getAppointments = async () => {
     try {
@@ -23,7 +24,33 @@ const vet = () => {
     }
   };
 
-  const handleSubmit = async (e) => {};
+  const handleSubmit = async (e, petId) => {
+    e.preventDefault();
+    console.log(petId);
+    console.log(Date.now().toString());
+    console.log(note);
+    console.log(data.user.name);
+
+    try {
+      const response = await axios.patch(
+        `http://localhost:3000/pets/${petId}`,
+        {
+          date: "Date.now().toString()",
+          medicalNote: note,
+          vet: data.user.name,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      console.log(response.data);
+      getAppointments();
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     getAppointments();
@@ -31,7 +58,7 @@ const vet = () => {
 
   const filterAppointmentsByPet = (petName) => {
     const filteredAppointments = appointments.filter((appointment) =>
-      appointment.pet.toLowerCase().includes(petName.toLowerCase())
+      appointment.petName.toLowerCase().includes(petName.toLowerCase())
     );
     setFilteredAppointments(filteredAppointments);
   };
@@ -88,16 +115,21 @@ const vet = () => {
             }}
             key={appointment._id}
           >
-            <h3>{appointment.pet}</h3>
+            <h3>{appointment.petName}</h3>
             <p>Date: {appointment.date}</p>
             <p>Time: {appointment.time}</p>
             <TextField
               id="outlined-basic"
               label="Description"
               variant="outlined"
+              onChange={(e) => {
+                setNote(e.target.value);
+              }}
             ></TextField>
             <Button
-              onClick={handleSubmit}
+              onClick={(e) => {
+                handleSubmit(e, appointment.petId);
+              }}
               sx={{ marginTop: "1rem" }}
               variant="contained"
             >
