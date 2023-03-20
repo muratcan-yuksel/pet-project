@@ -48,7 +48,20 @@ const pets = ({ pets }) => {
               <div style={{ margin: "5px" }}>
                 Medical History:{" "}
                 {pet.medicalHistory &&
-                  pet.medicalHistory.map((med) => <p>{med}</p>)}{" "}
+                  pet.medicalHistory.map((med) => (
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        border: "1px solid black",
+                        padding: "5px",
+                      }}
+                    >
+                      <p>{med.medicalNote}</p>
+                      <p>{med.date}</p>
+                      <p>{med.vet}</p>
+                    </div>
+                  ))}{" "}
               </div>
 
               <div style={{ margin: "5px" }}>

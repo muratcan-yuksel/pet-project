@@ -23,6 +23,8 @@ const vet = () => {
     }
   };
 
+  const handleSubmit = async (e) => {};
+
   useEffect(() => {
     getAppointments();
   }, []);
@@ -94,7 +96,11 @@ const vet = () => {
               label="Description"
               variant="outlined"
             ></TextField>
-            <Button sx={{ marginTop: "1rem" }} variant="contained">
+            <Button
+              onClick={handleSubmit}
+              sx={{ marginTop: "1rem" }}
+              variant="contained"
+            >
               Submit
             </Button>
           </Box>

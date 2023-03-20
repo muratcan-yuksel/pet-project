@@ -9,12 +9,7 @@ const petSchema = new mongoose.Schema({
   age: { type: Number, required: true },
   breed: { type: String, required: true },
   owner: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-  category: {
-    type: String,
-    enum: ["dog", "cat", "bird", "fish", "reptile", "other"],
-    default: "other",
-    required: true,
-  },
+  category: { type: String, required: true },
   allergies: { type: Array, required: false },
   bloodGroup: { type: String, required: true },
   weight: { type: Number, required: true },
