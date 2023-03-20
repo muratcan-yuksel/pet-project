@@ -274,12 +274,11 @@ const pets = ({ pets }) => {
                         display: "flex",
                         flexDirection: "column",
                         border: "1px solid black",
-                        padding: "5px",
                       }}
                     >
-                      <p>{med.medicalNote}</p>
-                      <p>{med.date}</p>
-                      <p>{med.vet}</p>
+                      <div>{med.medicalNote}</div>
+                      <div>{med.date}</div>
+                      <div>{med.vet}</div>
                     </div>
                   ))}{" "}
               </div>
