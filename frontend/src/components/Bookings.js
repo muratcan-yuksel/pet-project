@@ -10,6 +10,7 @@ import axios from "axios";
 export default function Bookings({ pets, vets }) {
   const [pet, setPet] = useState("");
   const [petId, setPetId] = useState("");
+  const [petName, setPetName] = useState("");
   const [vet, setVet] = useState("");
   const [reason, setReason] = useState("");
   const [date, setDate] = useState("");
@@ -25,8 +26,9 @@ export default function Bookings({ pets, vets }) {
 
   const handlePet = (event) => {
     console.log(event.target.value);
-    setPet(event.target.value.name);
+    setPet(event.target.value);
     setPetId(event.target.value._id);
+    setPetName(event.target.value.name);
   };
   const handleVet = (event) => {
     setVet(event.target.value);
@@ -36,15 +38,15 @@ export default function Bookings({ pets, vets }) {
     setReason(event.target.value);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(pet, vet, reason, date, time);
+    console.log(pet, petName, vet, reason, date, time);
 
     try {
-      const res = axios.post(
+      const res = await axios.post(
         "http://localhost:3000/appointments",
         {
-          pet,
+          petName,
           petId,
           vet,
           reason,
@@ -58,6 +60,7 @@ export default function Bookings({ pets, vets }) {
         }
       );
       console.log(res);
+      retunr;
     } catch (error) {
       console.log(error);
     }

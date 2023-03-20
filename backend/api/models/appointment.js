@@ -5,7 +5,7 @@ const appointmentSchema = new mongoose.Schema({
   _id: {
     type: mongoose.Schema.Types.ObjectId,
   },
-  pet: {
+  petName: {
     type: String,
   },
   petId: {

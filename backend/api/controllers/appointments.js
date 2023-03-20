@@ -14,7 +14,7 @@ const getAppointments = asyncWrapper(async (req, res) => {
 const createAppointment = asyncWrapper(async (req, res) => {
   const appointment = new Appointment({
     _id: new mongoose.Types.ObjectId(),
-    pet: req.body.pet,
+    petName: req.body.petName,
     petId: req.body.petId,
     vet: req.body.vet,
     date: req.body.date,
