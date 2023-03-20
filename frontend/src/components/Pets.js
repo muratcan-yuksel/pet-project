@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
@@ -9,7 +9,7 @@ import { TextField } from "@mui/material";
 import axios from "axios";
 import { DataContext } from "@/context/provider";
 
-const pets = ({ pets }) => {
+const pets = ({ pets, onChildData }) => {
   console.log(pets);
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
@@ -23,6 +23,8 @@ const pets = ({ pets }) => {
   const [medicalHistoryDate, setMedicalHistoryDate] = useState("");
   const [medicalHistoryNote, setMedicalHistoryNote] = useState("");
   const [medicalHistoryVet, setMedicalHistoryVet] = useState("");
+  let count = 0;
+  const [dummy, setDummy] = useState(false);
 
   const [data, setData] = useContext(DataContext);
 
@@ -98,10 +100,13 @@ const pets = ({ pets }) => {
         },
       });
       console.log(res.data);
+      res.status === 200 && count++;
+      onChildData(Date.now());
     } catch (error) {
       console.log(error);
     }
   };
+  useEffect(() => {}, [count]);
 
   return (
     <div>

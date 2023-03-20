@@ -12,6 +12,11 @@ const owner = () => {
   const [pets, setPets] = useState([]);
   const [vets, setVets] = useState([]);
   const [caretakers, setCaretakers] = useState([]);
+  const [childData, setChildData] = useState("");
+
+  const handleChildData = (data) => {
+    setChildData(data);
+  };
 
   const getPets = async () => {
     try {
@@ -61,7 +66,7 @@ const owner = () => {
 
   const choice = () => {
     if (data.navChoice === "Pets") {
-      return <Pets pets={pets} />;
+      return <Pets pets={pets} onChildData={handleChildData} />;
     } else if (data.navChoice === "Store") {
       return <Store />;
     } else if (data.navChoice === "Caretakers") {
@@ -75,7 +80,7 @@ const owner = () => {
     getCaretakers();
     getPets();
     getVets();
-  }, []);
+  }, [childData]);
 
   console.log("mydata", data);
   return (
