@@ -10,25 +10,36 @@ const admin = () => {
   const [data, setData] = useContext(DataContext);
   const [vets, setVets] = useState([]);
   const [name, setName] = useState("");
-  const [address, setAddress] = useState("");
+  const [email, setEmail] = useState("");
+  const [pass, setPass] = useState("");
+  let count = 0;
 
   const getVets = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/vets");
+      const response = await axios.get("http://localhost:3000/users");
       console.log(response.data);
-      setVets(response.data.vets);
+      // setVets(response.data.users);
+      filterVets(response.data.users);
     } catch (error) {
       console.log(error);
     }
   };
 
+  const filterVets = (users) => {
+    const filteredUsers = users.filter((user) => user.role === "vet");
+    setVets(filteredUsers);
+  };
+
   const addVet = async () => {
     try {
-      const response = await axios.post("http://localhost:3000/vets", {
+      const response = await axios.post("http://localhost:3000/users/signup", {
         name: name,
-        address: address,
+        email: email,
+        password: pass,
+        role: "vet",
       });
       console.log(response.data);
+      count++;
       getVets();
     } catch (error) {
       console.log(error);
@@ -37,7 +48,7 @@ const admin = () => {
 
   useEffect(() => {
     getVets();
-  }, []);
+  }, [count]);
 
   return (
     <div>
@@ -74,11 +85,17 @@ const admin = () => {
             id="outlined-basic"
             label="Name"
             variant="outlined"
-          />
+          />{" "}
           <TextField
-            onChange={(e) => setAddress(e.target.value)}
+            onChange={(e) => setEmail(e.target.value)}
             id="outlined-basic"
-            label="Address"
+            label="Email"
+            variant="outlined"
+          />{" "}
+          <TextField
+            onChange={(e) => setPass(e.target.value)}
+            id="outlined-basic"
+            label="Password"
             variant="outlined"
           />
           <Button onClick={addVet} variant="contained">
@@ -90,7 +107,7 @@ const admin = () => {
           {vets.map((vet) => (
             <div key={vet._id}>
               <p>{vet.name}</p>
-              <p>{vet.address}</p>
+              <p>{vet.email}</p>
             </div>
           ))}
         </Box>
