@@ -5,6 +5,11 @@ import furrycare from "../images/furrycare.svg";
 import { DataContext } from "@/context/provider";
 import TextField from "@mui/material/TextField";
 import axios from "axios";
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import Typography from "@mui/material/Typography";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 const vet = () => {
   const [data, setData] = useContext(DataContext);
@@ -12,6 +17,8 @@ const vet = () => {
   const [appointments, setAppointments] = useState([]);
   const [filteredAppointments, setFilteredAppointments] = useState([]);
   const [note, setNote] = useState("");
+  const [pet, setPet] = useState({});
+  // const [medicalHistory, setMedicalHistory] = useState([]);
 
   const getAppointments = async () => {
     try {
@@ -19,6 +26,16 @@ const vet = () => {
       console.log(response.data);
       setAppointments(response.data.appointments);
       setFilteredAppointments(response.data.appointments);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getPet = async (petId) => {
+    try {
+      const response = await axios.get(`http://localhost:3000/pets/${petId}`);
+      console.log(response.data.pet);
+      setPet(response.data.pet);
     } catch (error) {
       console.log(error);
     }
@@ -35,7 +52,7 @@ const vet = () => {
       const response = await axios.patch(
         `http://localhost:3000/pets/${petId}`,
         {
-          date: "Date.now().toString()",
+          date: new Date(Date.now()).toLocaleString(),
           medicalNote: note,
           vet: data.user.name,
         },
@@ -118,6 +135,41 @@ const vet = () => {
             <h3>{appointment.petName}</h3>
             <p>Date: {appointment.date}</p>
             <p>Time: {appointment.time}</p>
+            <Accordion onClick={() => getPet(appointment.petId)}>
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel1a-content"
+                id="panel1a-header"
+              >
+                <Typography>Accordion 1</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Typography>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                  Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
+                  eget.
+                  <div>
+                    {pet.medicalHistory ? (
+                      pet.medicalHistory.map((history) => (
+                        <div
+                          style={{
+                            border: "1px solid black",
+                            margin: "10px",
+                            padding: "10px",
+                          }}
+                        >
+                          <div>Date: {history.date}</div>
+                          <div>Note: {history.medicalNote}</div>
+                          <div>Vet: {history.vet}</div>
+                        </div>
+                      ))
+                    ) : (
+                      <p>No medical history</p>
+                    )}
+                  </div>
+                </Typography>
+              </AccordionDetails>
+            </Accordion>
             <TextField
               id="outlined-basic"
               label="Description"
